@@ -4,7 +4,10 @@ const validator = require('validator')
 
 const Schema = mongoose.Schema
 
-//creating user schem
+//favorite Schema
+const favoriteSchema = new Schema({ prod_id: { type: String } })
+
+//creating user schema
 const userSchema = new Schema({
     name: {
         type: String,
@@ -22,7 +25,8 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    favorite: [favoriteSchema]
 }, { timestamps: true })
 
 
@@ -77,6 +81,14 @@ userSchema.statics.login = async function(email, password) {
     }
   
     return user
+}
+
+//schema static add to favorites method
+userSchema.statics.up = async function(id, product) {
+
+    const update = await this.updateOne({_id: id}, { $addToSet: { favorite: product }})
+   
+    return update
 }
 
 module.exports = mongoose.model('User', userSchema)

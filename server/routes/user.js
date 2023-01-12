@@ -1,5 +1,5 @@
 const express = require('express')
-const { userLogin, userSignup, getUser} = require('../controllers/userController')
+const { userLogin, userSignup, getUser, addFavorite} = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -11,6 +11,9 @@ router.post('/login', userLogin)
 
 //get user profile
 router.get('/:id', getUser)
+
+//add favorite
+router.patch('/:id', addFavorite)
 
 
 

@@ -54,8 +54,21 @@ const getUser = async (req,res) => {
     }
 }
 
+//add product to favorites
+const addFavorite = async (req,res) => {
+    const { id } = req.params
+    const product  = req.body
+    try{
+        const user = await User.up(id, product)
+        res.status(200).json({user})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     userSignup,
     userLogin,
-    getUser
+    getUser,
+    addFavorite
 }
